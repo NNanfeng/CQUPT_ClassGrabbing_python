@@ -5,10 +5,10 @@
     - [目录](#目录)
     - [特别声明](#特别声明)
     - [安装](#安装)
+    - [所需库安装](#所需库安装)
     - [快速开始](#快速开始)
     - [COOKIE以及LOADS的获取教程](#COOKIE以及LOADS的获取教程)
          - [COOKIE](#COOKIE)
-    - [其余高级操作](#其余高级操作)
 
 ## 特别声明
 
@@ -34,8 +34,16 @@
 
 如果你有Go的环境请跳转[L2ncE/CQUPT-ClassGrabbing: 重庆邮电大学抢课（捡漏）工具，支持自定义抢课速度，高并发抢课，同时抢多门课程。能够模糊搜索所有课程并拿到所有响应信息 (github.com)](https://github.com/L2ncE/CQUPT-ClassGrabbing)
 
+## 所需库安装
+
+直接cmd执行
+
+`pip install requests`
 
 ## 快速开始
+
+python ClassGrabbing.py
+
 ```python
 # 初始值，请浏览器F12获取或通过抓包获取(格式为PHPSESSID=XXXXXXXXX  注意：请不要写掉双引号)
 cookie = "PHPSESSID=5b07jne8a3d6raa73cf57pp81t"
