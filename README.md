@@ -1,4 +1,4 @@
-# 重庆邮电大学抢课工具
+# 重庆邮电大学抢课（捡漏）工具
 
 ## 目录
 - [重庆邮电大学抢课框架](#重庆邮电大学抢课框架)
@@ -8,7 +8,6 @@
     - [快速开始](#快速开始)
     - [COOKIE以及LOADS的获取教程](#COOKIE以及LOADS的获取教程)
          - [COOKIE](#COOKIE)
-         - [LOAD](#LOAD)
     - [其余高级操作](#其余高级操作)
 
 ## 特别声明
@@ -31,41 +30,19 @@
 
 ## 安装
 
-我将默认你已经拥有Go语言开发环境，如果你还没有可以去到[这个链接](https://blog.csdn.net/weixin_44621343/article/details/117792504)
+我将默认你已经拥有Python语言开发环境，如果你还没有可以去到[这个链接]([(10条消息) python环境安装（一）_yunlive的博客-CSDN博客_python环境配置](https://blog.csdn.net/u012106306/article/details/100040680))
 
-1. 你需要Go的开发环境[Go](https://golang.org/)，然后您可以使用以下 Go 命令安装 Gin
-```sh
-$ go get -u github.com/L2ncE/CQUPT-ClassGrabbing
-```
-
-2. 在你的代码中import
-
-```go
-import "github.com/L2ncE/CQUPT-ClassGrabbing"
-```
+如果你有Go的环境请跳转[L2ncE/CQUPT-ClassGrabbing: 重庆邮电大学抢课（捡漏）工具，支持自定义抢课速度，高并发抢课，同时抢多门课程。能够模糊搜索所有课程并拿到所有响应信息 (github.com)](https://github.com/L2ncE/CQUPT-ClassGrabbing)
 
 
 ## 快速开始
-使用包中的LoopRob，0.25s进行一次抢课，直到有一门课被抢到
-```go
-package main
-
-import (
-	"github.com/L2ncE/CQUPT-ClassGrabbing/ClassGrabbing"
-)
-
-func main() {
-	cookie := "这里是一个cookie"
-	
-	//支持同时抢多门课程
-	loads := []string{
-		"这里是第一节课",
-		"这里是第二节课"}
-
-	ClassGrabbing.LoopRob(cookie, loads)
-}
+```python
+# 初始值，请浏览器F12获取或通过抓包获取(格式为PHPSESSID=XXXXXXXXX  注意：请不要写掉双引号)
+cookie = "PHPSESSID=5b07jne8a3d6raa73cf57pp81t"
+# 每抢一次课的延时（不建议低于0.15s）
+sleep_time = 0.15
 ```
-其中cookie以及loads需要自己获取
+其中cookie需要自己获取
 
 ## COOKIE以及LOADS的获取教程
 
@@ -80,69 +57,13 @@ func main() {
 
 ![image-20220513233828066](https://s2.loli.net/2022/05/13/gc8bBAzf1qwevUr.png)
 
-然后一直往下翻，就会找到**COOKIE**，将其复制下来即可
+然后一直往下翻，就会找到**COOKIE**(只需要后面的PHPSESSID,在抢课过程中请不要退出浏览器)，将其复制下来即可
 
 ![image-20220513233921962](https://s2.loli.net/2022/05/13/czhZMt2aL5U1wup.png)
 
-### LOAD
-
-#### 方法一
-
-重复和上面COOKIE的相同步骤到选课界面，在你想选择的课程旁边点击“+”号，查看网络选项卡会新增一个POST请求，将其负载选项卡中的源代码复制下来即可
-
-![image-20220513234236467](https://s2.loli.net/2022/05/13/H6xGfKPQ9d5aVeN.png)
 
 
 
-#### 方法二
 
-我们的抢课工具中就已经封装了获取load的函数
-
-> 分别可以获取所有人文、自然选课的负载（会有课程相关的信息提示），除此以外还可以通过模糊搜索进行快速准确的查找
-
-```go
-package main
-
-import (
-	"github.com/L2ncE/CQUPT-ClassGrabbing/Query"
-)
-
-func main() {
-	cookie := "这里是一个cookie"
-	param := "Rw or Zr" //其中Rw为人文选修，Zr为自然选修
-	content := "你想模糊搜索的内容" //例如输入“工程”会将所有带有工程两个字的课程信息以及负载输出
-
-	Query.AllRenWen(cookie)
-	Query.AllZiRan(cookie)
-	Query.Search(param, cookie, content)
-}
-
-```
-
-## 其余高级操作
-
-```go
-//高并发抢课 会有被BAN风险
-func LoopRobWithHighConcurrency(cookie string, loads []string) {
-...
-}
-...
-```
-
-```go
-//只进行一次访问并传回响应
-func SingleRobWithInfo(cookie string, load string) {
-...
-}
-...
-```
-
-```go
-//自定义一次访问的速度
-//duration中为你想自定义的秒数，建议不小于0.2
-func LoopRobWithCustomTime(cookie string, loads []string, duration float64) {
-...
-}
-...
-```
+## 
 
