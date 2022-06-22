@@ -56,19 +56,8 @@ sleep_time = 0.15
 ## COOKIE以及LOADS的获取教程
 
 ### COOKIE
-首先进入到[选课系统](http://xk1.cqupt.edu.cn/)中登录进入到选课详细界面
+为提高使用门槛，请自行获取cookie捏
 
-在键盘上按下**F12**进入开发者工具并点击网络选项卡
-
-![image-20220513233644944](https://s2.loli.net/2022/05/13/sM4mAclvHnuyO2F.png)
-
-在键盘上按**F5**进行页面刷新后，网络视图同样会进行刷新，我们点击yxk.php后选择标头选项卡
-
-![image-20220513233828066](https://s2.loli.net/2022/05/13/gc8bBAzf1qwevUr.png)
-
-然后一直往下翻，就会找到**COOKIE**(只需要后面的PHPSESSID,在抢课过程中请不要退出浏览器)，将其复制下来即可
-
-![image-20220513233921962](https://s2.loli.net/2022/05/13/czhZMt2aL5U1wup.png)
 
 
 
