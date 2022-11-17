@@ -1,11 +1,11 @@
-#author NNanfeng_
+#author NNanfeng_ Reacurt
 import requests
 import time
 from urllib import parse
 
 
 # 初始值，请浏览器F12获取或通过抓包获取(格式为PHPSESSID=XXXXXXXXX  注意：请不要写掉双引号)
-cookie = "PHPSESSID=5b07jne8a3d6raa73cf57pp81t"
+cookie = "PHPSESSID=c47st7i7o21gh0v2u71oc1diac"
 # 每抢一次课的延时（不建议低于0.15s）
 sleep_time = 0.15
 
@@ -18,6 +18,7 @@ def get_stu_info():
     get_stu_info_url = "http://xk1.cqupt.edu.cn/json-data-yxk.php?type=yxk"
     info = requests.get(url=get_stu_info_url, headers=get_stu_info_headers)
     s = info.json()
+    print(s)
     Id1 = [] # 课程ID
     jxb1 = [] # 教学班
     kcbh1 = [] # 课程编号
@@ -128,13 +129,18 @@ def get_class_info():
 def qiang():
     get_class_info()
     qiang_url = "http://xk1.cqupt.edu.cn/post.php"
-    qiang_headers = {"Host": "xk1.cqupt.edu.cn", "Content-Length": "231",
-               "Accept": "application/json, text/javascript, */*; q=0.01", "X-Requested-With": "XMLHttpRequest",
-               "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36",
-               "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8", "Origin": "http://xk1.cqupt.edu.cn",
-               "Referer": "http://xk1.cqupt.edu.cn/yxk.php", "Accept-Encoding": "gzip, deflate",
-               "Accept-Language": "zh-CN,zh;q=0.9", "Cookie": cookie, "Connection": "close"}
+    # qiang_headers = {"Host": "xk1.cqupt.edu.cn",
+    #            "Accept": "application/json, text/javascript, */*; q=0.01", "X-Requested-With": "XMLHttpRequest",
+    #            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36",
+    #            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8", "Origin": "http://xk1.cqupt.edu.cn",
+    #            "Referer": "http://xk1.cqupt.edu.cn/yxk.php", "Accept-Encoding": "gzip, deflate",
+    #            "Accept-Language": "zh-CN,zh;q=0.9", "Cookie": cookie, "Connection": "close"}
 
+
+    qiang_headers = {
+               "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36",
+               "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+                "Cookie": cookie, }
     payloadlist = []
     i = 0
     print(len(payloadlist))
@@ -151,11 +157,19 @@ def qiang():
                         print("课程名称:", kcmc[i] + "  课程编号:", kcbh[i] + "   教学班:", jxb[i] + "  课程类别:",
                               kclb[i] + "  课程学分:",
                               xf[i] + "  老师名字:", teaName[i])
-                        payloadchar = "xnxq=" + str(xnxq[i]) + "&jxb=" + str(jxb[i]) + "&kcbh=" + str(
-                            kcbh[i]) + "&kcmc=" + str(kcmc[i]) + "&xf=" \
-                                      + str(xf[i]) + "&teaName=" + str(teaName[i]) + "&rsLimit" + str(
-                            rsLimit[i]) + "&rwType" + str(rwType[i]) + "&kclb=" \
-                                      + str(kclb[i]) + "&kchType" + str(kchType[i]) + "&memo=" + str(memo[i])
+                        payloadchar = {
+                            "xnxq" : str(xnxq[i]),
+                            "jxb" : str(jxb[i]) ,
+                            "kcbh" : str(kcbh[i]) ,
+                            "kcmc" : str(kcmc[i]) ,
+                            "xf" :str(xf[i]) ,
+                            "teaName" : str(teaName[i]) ,
+                            "rsLimit" : str(rsLimit[i]) ,
+                            "rwType" : str(rwType[i]) ,
+                            "kclb" :  str(kclb[i]) ,
+                            "kchType" : str(kchType[i]) ,
+                            "memo" : str(memo[i])
+                            }
                         payloadlist.append(payloadchar)
             # 精确搜索
             if search_type == 2:
@@ -165,11 +179,24 @@ def qiang():
                         print("课程名称:", kcmc[i] + "  课程编号:", kcbh[i] + "   教学班:", jxb[i] + "  课程类别:",
                               kclb[i] + "  课程学分:",
                               xf[i] + "  老师名字:", teaName[i])
-                        payloadchar = "xnxq=" + str(xnxq[i]) + "&jxb=" + str(jxb[i]) + "&kcbh=" + str(
-                            kcbh[i]) + "&kcmc=" + str(kcmc[i]) + "&xf=" \
-                                      + str(xf[i]) + "&teaName=" + str(teaName[i]) + "&rsLimit" + str(
-                            rsLimit[i]) + "&rwType" + str(rwType[i]) + "&kclb=" \
-                                      + str(kclb[i]) + "&kchType" + str(kchType[i]) + "&memo=" + str(memo[i])
+                        # payloadchar = "xnxq=" + str(xnxq[i]) + "&jxb=" + str(jxb[i]) + "&kcbh=" + str(
+                        #     kcbh[i]) + "&kcmc=" + str(kcmc[i]) + "&xf=" \
+                        #               + str(xf[i]) + "&teaName=" + str(teaName[i]) + "&rsLimit=" + str(
+                        #     rsLimit[i]) + "&rwType=" + str(rwType[i]) + "&kclb=" \
+                        #               + str(kclb[i]) + "&kchType=" + str(kchType[i]) + "&memo=" + str(memo[i])
+                        payloadchar = {
+                            "xnxq" : str(xnxq[i]),
+                            "jxb" : str(jxb[i]) ,
+                            "kcbh" : str(kcbh[i]) ,
+                            "kcmc" : str(kcmc[i]) ,
+                            "xf" :str(xf[i]) ,
+                            "teaName" : str(teaName[i]) ,
+                            "rsLimit" : str(rsLimit[i]) ,
+                            "rwType" : str(rwType[i]) ,
+                            "kclb" :  str(kclb[i]) ,
+                            "kchType" : str(kchType[i]) ,
+                            "memo" : str(memo[i])
+                            }
                         payloadlist.append(payloadchar)
             else:
                 print("输入有误,请重新输入")
@@ -180,11 +207,19 @@ def qiang():
                     print("课程名称:", kcmc[i] + "  课程编号:", kcbh[i] + "   教学班:", jxb[i] + "  课程类别:",
                           kclb[i] + "  课程学分:",
                           xf[i] + "  老师名字:", teaName[i])
-                    payloadchar = "xnxq=" + str(xnxq[i]) + "&jxb=" + str(jxb[i]) + "&kcbh=" + str(
-                        kcbh[i]) + "&kcmc=" + str(kcmc[i]) + "&xf=" \
-                                  + str(xf[i]) + "&teaName=" + str(teaName[i]) + "&rsLimit" + str(
-                        rsLimit[i]) + "&rwType" + str(rwType[i]) + "&kclb=" \
-                                  + str(kclb[i]) + "&kchType" + str(kchType[i]) + "&memo=" + str(memo[i])
+                    payloadchar = {
+                            "xnxq" : str(xnxq[i]),
+                            "jxb" : str(jxb[i]) ,
+                            "kcbh" : str(kcbh[i]) ,
+                            "kcmc" : str(kcmc[i]) ,
+                            "xf" :str(xf[i]) ,
+                            "teaName" : str(teaName[i]) ,
+                            "rsLimit" : str(rsLimit[i]) ,
+                            "rwType" : str(rwType[i]) ,
+                            "kclb" :  str(kclb[i]) ,
+                            "kchType" : str(kchType[i]) ,
+                            "memo" : str(memo[i])
+                            }
                     payloadlist.append(payloadchar)
         elif menu == 3:
             class_jxb = input("请输入教学班号(可以模糊搜索):")
@@ -193,21 +228,32 @@ def qiang():
                     print("课程名称:", kcmc[i] + "  课程编号:", kcbh[i] + "   教学班:", jxb[i] + "  课程类别:",
                           kclb[i] + "  课程学分:",
                           xf[i] + "  老师名字:", teaName[i])
-                    payloadchar = "xnxq=" + str(xnxq[i]) + "&jxb=" + str(jxb[i]) + "&kcbh=" + str(
-                        kcbh[i]) + "&kcmc=" + str(kcmc[i]) + "&xf=" \
-                                  + str(xf[i]) + "&teaName=" + str(teaName[i]) + "&rsLimit" + str(
-                        rsLimit[i]) + "&rwType" + str(rwType[i]) + "&kclb=" \
-                                  + str(kclb[i]) + "&kchType" + str(kchType[i]) + "&memo=" + str(memo[i])
+                    payloadchar = {
+                            "xnxq" : str(xnxq[i]),
+                            "jxb" : str(jxb[i]) ,
+                            "kcbh" : str(kcbh[i]) ,
+                            "kcmc" : str(kcmc[i]) ,
+                            "xf" :str(xf[i]) ,
+                            "teaName" : str(teaName[i]) ,
+                            "rsLimit" : str(rsLimit[i]) ,
+                            "rwType" : str(rwType[i]) ,
+                            "kclb" :  str(kclb[i]) ,
+                            "kchType" : str(kchType[i]) ,
+                            "memo" : str(memo[i])
+                            }
                     payloadlist.append(payloadchar)
         elif menu == 4:
             break
         else:
             print("输入有误，请重新输入XD")
     # 抢课循环
+    i=0
     while True:
         j = i % len(payloadlist)
         payload = payloadlist[j]
-        res = requests.post(url=qiang_url, data=parse.quote(payload), headers=qiang_headers)
+        res = requests.post(url=qiang_url,
+                            data=payload,
+                            headers=qiang_headers)
         s = res.json()
         print(s['info'])
         print(time.asctime())
@@ -219,8 +265,6 @@ def qiang():
             if s['info'] == "ok":
                 print("抢课完成时间:", time.asctime())
                 break
-
-
 
 
 if __name__ == '__main__':
