@@ -1,11 +1,11 @@
-#author NNanfeng_ Reacurt
+#author NNanfeng_
 import requests
 import time
 from urllib import parse
 
 
 # 初始值，请浏览器F12获取或通过抓包获取(格式为PHPSESSID=XXXXXXXXX  注意：请不要写掉双引号)
-cookie = "PHPSESSID=c47st7i7o21gh0v2u71oc1diac"
+cookie = "PHPSESSID=rtk0htrtk645n2rphntlf4uga3"
 # 每抢一次课的延时（不建议低于0.15s）
 sleep_time = 0.15
 
@@ -73,6 +73,7 @@ def get_class_info():
     s = requests.get(url=jctszr_url, headers=get_class_info_headers)
     s = s.json()
     bj = requests.get(url=bj_url, headers=get_class_info_headers)
+    bj = bj.json()
     global jxb  # 教学班
     jxb = []
     global kcbh # 课程编号
@@ -121,6 +122,18 @@ def get_class_info():
         teaName.append(s["data"][i]["teaName"])
         xf.append(s["data"][i]["xf"])
         xnxq.append(s["data"][i]["xnxq"])
+    for i in range(len(bj["data"])):
+        jxb.append(bj["data"][i]["jxb"])
+        kcbh.append(bj["data"][i]["kcbh"])
+        kchType.append(bj["data"][i]["kchType"])
+        kclb.append(bj["data"][i]["kclb"])
+        kcmc.append(bj["data"][i]["kcmc"])
+        memo.append(bj["data"][i]["memo"])
+        rsLimit.append(bj["data"][i]["rsLimit"])
+        rwType.append(bj["data"][i]["rwType"])
+        teaName.append(bj["data"][i]["teaName"])
+        xf.append(bj["data"][i]["xf"])
+        xnxq.append(bj["data"][i]["xnxq"])
     print(len(kcmc))
     for i in range(len(kcmc)):
         print("课程名称:", kcmc[i]+"  课程编号:", kcbh[i]+"   教学班:", jxb[i]+"  课程类别:",kclb[i]+"  课程学分:", xf[i]+"  老师名字:", teaName[i])
