@@ -72,8 +72,8 @@ def get_class_info():
     r = r.json()
     s = requests.get(url=jctszr_url, headers=get_class_info_headers)
     s = s.json()
-    bj = requests.get(url=bj_url, headers=get_class_info_headers)
-    bj = bj.json()
+    #bj = requests.get(url=bj_url, headers=get_class_info_headers)
+    #bj = bj.json()
     global jxb  # 教学班
     jxb = []
     global kcbh # 课程编号
@@ -122,18 +122,18 @@ def get_class_info():
         teaName.append(s["data"][i]["teaName"])
         xf.append(s["data"][i]["xf"])
         xnxq.append(s["data"][i]["xnxq"])
-    for i in range(len(bj["data"])):
-        jxb.append(bj["data"][i]["jxb"])
-        kcbh.append(bj["data"][i]["kcbh"])
-        kchType.append(bj["data"][i]["kchType"])
-        kclb.append(bj["data"][i]["kclb"])
-        kcmc.append(bj["data"][i]["kcmc"])
-        memo.append(bj["data"][i]["memo"])
-        rsLimit.append(bj["data"][i]["rsLimit"])
-        rwType.append(bj["data"][i]["rwType"])
-        teaName.append(bj["data"][i]["teaName"])
-        xf.append(bj["data"][i]["xf"])
-        xnxq.append(bj["data"][i]["xnxq"])
+#     for i in range(len(bj["data"])):
+#         jxb.append(bj["data"][i]["jxb"])
+#         kcbh.append(bj["data"][i]["kcbh"])
+#         kchType.append(bj["data"][i]["kchType"])
+#         kclb.append(bj["data"][i]["kclb"])
+#         kcmc.append(bj["data"][i]["kcmc"])
+#         memo.append(bj["data"][i]["memo"])
+#         rsLimit.append(bj["data"][i]["rsLimit"])
+#         rwType.append(bj["data"][i]["rwType"])
+#         teaName.append(bj["data"][i]["teaName"])
+#         xf.append(bj["data"][i]["xf"])
+#         xnxq.append(bj["data"][i]["xnxq"])
     print(len(kcmc))
     for i in range(len(kcmc)):
         print("课程名称:", kcmc[i]+"  课程编号:", kcbh[i]+"   教学班:", jxb[i]+"  课程类别:",kclb[i]+"  课程学分:", xf[i]+"  老师名字:", teaName[i])
