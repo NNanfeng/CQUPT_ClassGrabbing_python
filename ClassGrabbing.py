@@ -1,22 +1,24 @@
 #author NNanfeng_
-import requests
 import time
-from urllib import parse
+import login
 
 
 # 初始值，请浏览器F12获取或通过抓包获取(格式为PHPSESSID=XXXXXXXXX  注意：请不要写掉双引号)
-cookie = "PHPSESSID=rtk0htrtk645n2rphntlf4uga3"
+# cookie = "PHPSESSID=rtk0htrtk645n2rphntlf4uga3"
+
+id="2020212300"
+psw="160015"
+
+#requests本身就可以管理cookie，和headers
+session=login.login(id,psw)
+
 # 每抢一次课的延时（不建议低于0.15s）
 sleep_time = 0.15
 
 def get_stu_info():
-    get_stu_info_headers= {"Host": "xk1.cqupt.edu.cn", "Cache-Control": "max-age=0", "Upgrade-Insecure-Requests": "1",
-                           "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36",
-                           "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-                           "Accept-Encoding": "gzip, deflate Accept-Language: zh-CN,zh;q=0.9",
-                           "Cookie": cookie, "Connection": "close"}
+
     get_stu_info_url = "http://xk1.cqupt.edu.cn/json-data-yxk.php?type=yxk"
-    info = requests.get(url=get_stu_info_url, headers=get_stu_info_headers)
+    info = session.get(url=get_stu_info_url)
     s = info.json()
     print(s)
     Id1 = [] # 课程ID
@@ -48,7 +50,6 @@ def get_stu_info():
             xkTime1.append(info.json()["data"][i]["xkTime"])
             xnxq1.append(info.json()["data"][i]["xnxq"])
         print("---------------------------------------------您已选择的课程有如下课程---------------------------------------------")
-        total = 0
         for i in range(len(s["data"])):
             print("|"+"学号:",xh1[i]+"  课程名:",kcmc1[i]+"   教学班:",jxb1[i]+"  课程编号:",kcbh1[i]+"  课程学分:", xf1[i]+"  选课时间:",xkTime1[i])
         print("---------------------------------------------您已选择的课程有如上课程---------------------------------------------")
@@ -58,19 +59,9 @@ def get_stu_info():
 def get_class_info():
     jctsrw_url = "http://xk1.cqupt.edu.cn/json-data-yxk.php?type=jctsRw"
     jctszr_url = "http://xk1.cqupt.edu.cn/json-data-yxk.php?type=jctsZr"
-    bj_url = "http://xk1.cqupt.edu.cn/json-data-yxk.php?type=bj"
-    get_class_info_headers = {"Host": "xk1.cqupt.edu.cn",
-"Accept": "application/json, text/javascript, */*; q=0.01",
-"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36",
-"X-Requested-With": "XMLHttpRequest",
-"Referer": "http://xk1.cqupt.edu.cn/yxk.php",
-"Accept-Encoding": "gzip, deflate",
-"Accept-Language": "zh-CN,zh;q=0.9",
-"Cookie": cookie,
-"Connection": "close"}
-    r = requests.get(url=jctsrw_url, headers=get_class_info_headers)
+    r = session.get(url=jctsrw_url)
     r = r.json()
-    s = requests.get(url=jctszr_url, headers=get_class_info_headers)
+    s = session.get(url=jctszr_url)
     s = s.json()
     #bj = requests.get(url=bj_url, headers=get_class_info_headers)
     #bj = bj.json()
@@ -122,18 +113,7 @@ def get_class_info():
         teaName.append(s["data"][i]["teaName"])
         xf.append(s["data"][i]["xf"])
         xnxq.append(s["data"][i]["xnxq"])
-#     for i in range(len(bj["data"])):
-#         jxb.append(bj["data"][i]["jxb"])
-#         kcbh.append(bj["data"][i]["kcbh"])
-#         kchType.append(bj["data"][i]["kchType"])
-#         kclb.append(bj["data"][i]["kclb"])
-#         kcmc.append(bj["data"][i]["kcmc"])
-#         memo.append(bj["data"][i]["memo"])
-#         rsLimit.append(bj["data"][i]["rsLimit"])
-#         rwType.append(bj["data"][i]["rwType"])
-#         teaName.append(bj["data"][i]["teaName"])
-#         xf.append(bj["data"][i]["xf"])
-#         xnxq.append(bj["data"][i]["xnxq"])
+
     print(len(kcmc))
     for i in range(len(kcmc)):
         print("课程名称:", kcmc[i]+"  课程编号:", kcbh[i]+"   教学班:", jxb[i]+"  课程类别:",kclb[i]+"  课程学分:", xf[i]+"  老师名字:", teaName[i])
@@ -142,18 +122,6 @@ def get_class_info():
 def qiang():
     get_class_info()
     qiang_url = "http://xk1.cqupt.edu.cn/post.php"
-    # qiang_headers = {"Host": "xk1.cqupt.edu.cn",
-    #            "Accept": "application/json, text/javascript, */*; q=0.01", "X-Requested-With": "XMLHttpRequest",
-    #            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36",
-    #            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8", "Origin": "http://xk1.cqupt.edu.cn",
-    #            "Referer": "http://xk1.cqupt.edu.cn/yxk.php", "Accept-Encoding": "gzip, deflate",
-    #            "Accept-Language": "zh-CN,zh;q=0.9", "Cookie": cookie, "Connection": "close"}
-
-
-    qiang_headers = {
-               "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36",
-               "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-                "Cookie": cookie, }
     payloadlist = []
     i = 0
     print(len(payloadlist))
@@ -264,9 +232,8 @@ def qiang():
     while True:
         j = i % len(payloadlist)
         payload = payloadlist[j]
-        res = requests.post(url=qiang_url,
-                            data=payload,
-                            headers=qiang_headers)
+        res = session.post(url=qiang_url,
+                            data=payload,)
         s = res.json()
         print(s['info'])
         print(time.asctime())
